@@ -63,22 +63,24 @@ def processar_pergunta(pergunta):
 # Rota do chatbot
 @app.route("/chat", methods=["GET", "POST"])  
 def chat():
-    if request.method == "GET":
+    if request.method == "GET", "POST":
         return jsonify({"message": "Use um POST para enviar mensagens."})
 
     data = request.json
     user_message = data.get("message", "")
 
+    # Se encontrar na planilha, responde diretamente (adicionar lógica aqui depois)
     response = {"reply": f"Você disse: {user_message}"}
-    return jsonify(response)
 
     # Se não encontrar na planilha, usa o Gemini
     try:
         model = genai.GenerativeModel("gemini-pro")
-        response = model.generate_content(user_message)
-        return jsonify({"reply": response.text})
+        gemini_response = model.generate_content(user_message)
+        response["reply"] = gemini_response.text
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        response = {"error": str(e)}
+
+    return jsonify(response)
 
 # Rota para testar a leitura dos dados da planilha
 @app.route("/dados", methods=["GET"])
