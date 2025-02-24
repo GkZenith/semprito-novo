@@ -19,7 +19,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuração do Google Sheets
-SERVICE_ACCOUNT_FILE = "/etc/secrets/<seu_arquivo.json>"
+SERVICE_ACCOUNT_FILE = "seu_arquivo.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
