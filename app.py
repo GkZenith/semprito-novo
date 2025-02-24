@@ -63,7 +63,7 @@ def processar_pergunta(pergunta):
 # Rota do chatbot
 @app.route("/chat", methods=["GET", "POST"])  
 def chat():
-    if request.method == "GET", "POST":
+    if request.method == "post":
         return jsonify({"message": "Use um POST para enviar mensagens."})
 
     data = request.json
