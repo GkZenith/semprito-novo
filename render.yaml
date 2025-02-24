@@ -1,0 +1,14 @@
+# Exported from Render on 2025-02-12T22:44:52Z
+services:
+- type: web
+  name: semprito-1
+  runtime: python
+  repo: https://github.com/GkZenith/semprito
+  plan: free
+  envVars:
+  - key: GEMINI_API_KEY
+    sync: false
+  region: oregon
+  buildCommand: pip install -r requirements.txt
+  startCommand: python app.py
+version: "1"
