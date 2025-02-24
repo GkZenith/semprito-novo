@@ -61,18 +61,16 @@ def processar_pergunta(pergunta):
     return None
 
 # Rota do chatbot
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["GET", "POST"])  
 def chat():
+    if request.method == "GET":
+        return jsonify({"message": "Use um POST para enviar mensagens."})
+
     data = request.json
-    user_message = data.get("message", "").lower().strip()
+    user_message = data.get("message", "")
 
-    if not user_message:
-        return jsonify({"error": "Mensagem não fornecida"}), 400
-
-    # Primeiro tenta buscar dados na planilha
-    resposta = processar_pergunta(user_message)
-    if resposta:
-        return jsonify({"reply": resposta})
+    response = {"reply": f"Você disse: {user_message}"}
+    return jsonify(response)
 
     # Se não encontrar na planilha, usa o Gemini
     try:
