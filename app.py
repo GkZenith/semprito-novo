@@ -19,7 +19,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuração do Google Sheets
-SERVICE_ACCOUNT_FILE = "seu_arquivo.json"
+SERVICE_ACCOUNT_FILE = "/etc/secrets/<seu_arquivo.json>"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -92,4 +92,5 @@ def obter_dados():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(debug=True, host="0.0.0.0", port=port)
