@@ -77,7 +77,10 @@ def chat():
         try:
             model = genai.GenerativeModel("gemini-pro")
             gemini_response = model.generate_content(user_message)
-            response["reply"] = f"Olá! Eu sou o Semprito, seu assistente virtual. {gemini_response.text}"
+if "Gemini" in gemini_response.text:
+    response["reply"] = "Olá! Eu sou o Semprito, seu assistente virtual. Como posso te ajudar hoje?"
+else:
+    response["reply"] = f"Olá! Eu sou o Semprito, seu assistente virtual. {gemini_response.text}"
         except Exception as e:
             response = {"error": str(e)}
 
