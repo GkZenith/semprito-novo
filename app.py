@@ -81,7 +81,7 @@ try:
 except Exception as e:
     response = {"error": str(e)}
 
-        return jsonify(response)  # O return deve estar aqui fora do try/except
+return jsonify(response)  # Este return deve estar aqui, fora do try/except
 
 # Rota para testar a leitura dos dados da planilha
 @app.route("/dados", methods=["GET"])
