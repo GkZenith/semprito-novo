@@ -61,28 +61,27 @@ def processar_pergunta(pergunta):
     return None
 
 # Rota do chatbot
-@app.route("/chat", methods=["GET", "POST"])
+@app.route("/chat", methods=["GET", "POST"])  
 def chat():
-if request.method == "GET":
-    return jsonify({"message": "Use um POST para enviar mensagens."})
+    if request.method == "GET":
+        return jsonify({"message": "Use um POST para enviar mensagens."})
 
-if request.method == "POST":  # Aqui precisa estar em maiúsculas
-    data = request.json
-    user_message = data.get("message", "")
-    return jsonify({"reply": f"Você disse: {user_message}"})
+    if request.method == "POST":  # "POST" precisa estar em maiúsculas
+        data = request.json
+        user_message = data.get("message", "")
 
-    # Se encontrar na planilha, responde diretamente (adicionar lógica aqui depois)
-    response = {"reply": f"Você disse: {user_message}"}
+        # Resposta inicial
+        response = {"reply": f"Você disse: {user_message}"}
 
-    # Se não encontrar na planilha, usa o Gemini
-    try:
-        model = genai.GenerativeModel("gemini-pro")
-        gemini_response = model.generate_content(user_message)
-        response["reply"] = gemini_response.text
-    except Exception as e:
-        response = {"error": str(e)}
+        # Se não encontrar na planilha, usa o Gemini
+        try:
+            model = genai.GenerativeModel("gemini-pro")
+            gemini_response = model.generate_content(user_message)
+            response["reply"] = gemini_response.text
+        except Exception as e:
+            response = {"error": str(e)}
 
-    return jsonify(response)
+        return jsonify(response)  # O return deve estar aqui fora do try/except
 
 # Rota para testar a leitura dos dados da planilha
 @app.route("/dados", methods=["GET"])
