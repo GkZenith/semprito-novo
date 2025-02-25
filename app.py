@@ -74,12 +74,12 @@ def chat():
         response = {"reply": f"Você disse: {user_message}"}
 
         # Se não encontrar na planilha, usa o Gemini
-        try:
-            model = genai.GenerativeModel("gemini-pro")
-            gemini_response = model.generate_content(user_message)
-            response["reply"] = gemini_response.text
-        except Exception as e:
-            response = {"error": str(e)}
+try:
+    model = genai.GenerativeModel("gemini-pro")
+    gemini_response = model.generate_content(user_message)
+    response["reply"] = f"Olá! Eu sou o Semprito, seu assistente virtual. {gemini_response.text}"
+except Exception as e:
+    response = {"error": str(e)}
 
         return jsonify(response)  # O return deve estar aqui fora do try/except
 
