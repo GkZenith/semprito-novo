@@ -74,14 +74,14 @@ def chat():
         response = {"reply": f"Você disse: {user_message}"}
 
         # Se não encontrar na planilha, usa o Gemini
-try:
-    model = genai.GenerativeModel("gemini-pro")
-    gemini_response = model.generate_content(user_message)
-    response["reply"] = f"Olá! Eu sou o Semprito, seu assistente virtual. {gemini_response.text}"
-except Exception as e:
-    response = {"error": str(e)}
+        try:
+            model = genai.GenerativeModel("gemini-pro")
+            gemini_response = model.generate_content(user_message)
+            response["reply"] = f"Olá! Eu sou o Semprito, seu assistente virtual. {gemini_response.text}"
+        except Exception as e:
+            response = {"error": str(e)}
 
-return jsonify(response)  # Este return deve estar aqui, fora do try/except
+        return jsonify(response)  # O return agora está corretamente indentado dentro da função
 
 # Rota para testar a leitura dos dados da planilha
 @app.route("/dados", methods=["GET"])
